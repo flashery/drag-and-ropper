@@ -23,7 +23,7 @@ import { Head } from '@inertiajs/vue3';
                     <div class="users">
                         <div v-for="user in users" class="user">
                             <div class="info">
-                                <a target="_self" rel="noopener noreferrer" aria-label="website" :href="'users/' + user.id"
+                                <a target="_self" @click="load()" rel="noopener noreferrer" aria-label="website" :href="'users/' + user.id"
                                     style="background-color: rgb(14, 14, 14);">
                                     <img :src="user.mug">
                                     <p class="text">
@@ -47,7 +47,18 @@ export default {
         console.log()
     },
     methods: {
-
+        load() {
+            let loader = this.$loading.show({
+                // Optional parameters
+                container: this.fullPage ? null : this.$refs.formContainer,
+                canCancel: true,
+                onCancel: this.onCancel,
+            });
+            // simulate AJAX
+            setTimeout(() => {
+                loader.hide()
+            }, 5000)
+        }
     }
 }
 </script>
@@ -117,6 +128,7 @@ export default {
     line-height: 1.5;
     color: #ffffff !important;
 }
+
 h1 {
     text-align: center;
     font-size: 3rem;
